@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSDI Learning Hub</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #e74c3c;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        nav {
+            background-color: var(--dark-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li a {
+            color: white;
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-links li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .section {
+            padding: 3rem 0;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--dark-color);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background-color: var(--primary-color);
+            margin: 0.5rem auto;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .sdlc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .phase-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            color: var(--primary-color);
+        }
+        
+        .phase-icon {
+            margin-right: 0.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .checklist {
+            list-style: none;
+        }
+        
+        .checklist li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .checklist li::before {
+            content: '✓';
+            color: var(--secondary-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .project-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .project-img {
+            height: 180px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+        
+        .project-info {
+            padding: 1.5rem;
+        }
+        
+        .project-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .project-desc {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        
+        .tag {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .resources {
+            background-color: var(--light-color);
+        }
+        
+        .resource-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .resource-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            transition: transform 0.3s;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .resource-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .resource-links {
+            list-style: none;
+        }
+        
+        .resource-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .resource-links li a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .resource-links li a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            list-style: none;
+            margin: 1rem 0;
+        }
+        
+        .footer-links li {
+            margin: 0 1rem;
+        }
+        
+        .footer-links li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links li a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                padding: 0.5rem 0;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .nav-links li {
+                text-align: center;
+            }
+            
+            .nav-links li a {
+                padding: 0.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="logo">SSDI Learning Hub</div>
+            <div class="tagline">Master Software System Design & Implementation</div>
+        </div>
+    </header>
+    
+    <!-- Navigation Section -->
+    <nav>
+        <div class="container nav-container">
+            <ul class="nav-links">
+                <li><a href="#sdlc">SDLC Cheat Sheet</a></li>
+                <li><a href="#projects">Project Ideas</a></li>
+                <li><a href="#resources">Resources</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- SDLC Cheat Sheet Section -->
+    <section id="sdlc" class="section">
+        <div class="container">
+            <h2 class="section-title">SDLC Cheat Sheet</h2>
+            <div class="card">
+                <div class="card-header">
+                    <h3>Software Development Life Cycle (SDLC)</h3>
+                </div>
+                <div class="card-body">
+                    <p>The SDLC is a framework that defines the steps involved in the development of software. Here's a comprehensive cheat sheet for each phase:</p>
+                    
+                    <div class="sdlc-grid">
+                        <!-- Requirements Phase -->
+                        <div class="sdlc-phase">
+                            <div class="phase-title">
+                                <span class="phase-icon">📋</span>
+                                <h4>1. Requirements Gathering</h4>
+                            </div>
+                            <ul class="checklist">
+                                <li>Identify stakeholders and end-users</li>
+                                <li>Conduct interviews and surveys</li>
+                                <li>Create user stories and use cases</li>
+                                <li>Define functional requirements</li>
+                                <li>Define non-functional requirements</li>
+                                <li>Validate requirements with stakeholders</li>
+                                <li>Create Software Requirements Specification (SRS)</li>
+                                <li>Establish prioritization for requirements</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Analysis Phase -->
+                        <div class="sdlc-phase">
+                            <div class="phase-title">
+                                <span class="phase-icon">🔍</span>
+                                <h4>2. System Analysis</h4>
+                            </div>
+                            <ul class="checklist">
+                                <li>Analyze existing systems (if applicable)</li>
+                                <li>Create data flow diagrams</li>
+                                <li>Develop entity-relationship diagrams</li>
+                                <li>Identify system boundaries</li>
+                                <li>Define integration points</li>
+                                <li>Analyze technical feasibility</li>
+                                <li>Conduct risk assessment</li>
+                                <li>Evaluate alternative solutions</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Design Phase -->
+                        <div class="sdlc-phase">
+                            <div class="phase-title">
+                                <span class="phase-icon">🎨</span>
+                                <h4>3. System Design</h4>
+                            </div>
+                            <ul class="checklist">
+                                <li>Create high-level architecture design</li>
+                                <li>Design database schemas</li>
+                                <li>Define module specifications</li>
+                                <li>Create class diagrams</li>
+                                <li>Design API specifications</li>
+                                <li>Create UI/UX wireframes and mockups</li>
+                                <li>Define security architecture</li>
+                                <li>Document design decisions</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Implementation Phase -->
+                        <div class="sdlc-phase">
+                            <div class="phase-title">
+                                <span class="phase-icon">💻</span>
+                                <h4>4. Implementation</h4>
+                            </div>
+                            <ul class="checklist">
+                                <li>Set up development environment</li>
+                                <li>Create coding standards</li>
+                                <li>Implement database</li>
+                                <li>Develop core functionalities</li>
+                                <li>Implement UI components</li>
+                                <li>Write unit tests</li>
+                                <li>Conduct code reviews</li>
+                                <li>Perform continuous integration</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Testing Phase -->
+                        <div class="sdlc-phase">
+                            <div class="phase-title">
+                                <span class="phase-icon">🧪</span>
+                                <h4>5. Testing</h4>
+                            </div>
+                            <ul class="checklist">
+                                <li>Create test plans and test cases</li>
+                                <li>Perform unit testing</li>
+                                <li>Conduct integration testing</li>
+                                <li>Execute system testing</li>
+                                <li>Perform user acceptance testing (UAT)</li>
+                                <li>Test performance and load handling</li>
+                                <li>Conduct security testing</li>
+                                <li>Document and track defects</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Deployment Phase -->
+                        <div class="sdlc-phase">
+                            <div class="phase-title">
+                                <span class="phase-icon">🚀</span>
+                                <h4>6. Deployment</h4>
+                            </div>
+                            <ul class="checklist">
+                                <li>Create deployment plan</li>
+                                <li>Prepare production environment</li>
+                                <li>Create user documentation</li>
+                                <li>Train end-users</li>
+                                <li>Migrate data (if applicable)</li>
+                                <li>Deploy application to production</li>
+                                <li>Conduct post-deployment testing</li>
+                                <li>Get stakeholder sign-off</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Maintenance Phase -->
+                        <div class="sdlc-phase">
+                            <div class="phase-title">
+                                <span class="phase-icon">🔧</span>
+                                <h4>7. Maintenance & Support</h4>
+                            </div>
+                            <ul class="checklist">
+                                <li>Monitor system performance</li>
+                                <li>Address bug fixes</li>
+                                <li>Implement feature enhancements</li>
+                                <li>Apply security patches</li>
+                                <li>Optimize performance</li>
+                                <li>Conduct regular backups</li>
+                                <li>Provide technical support</li>
+                                <li>Plan for system upgrades</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SDLC Models Comparison -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>SDLC Models Comparison</h3>
+                </div>
+                <div class="card-body">
+                    <div class="sdlc-grid">
+                        <!-- Waterfall Model -->
+                        <div class="sdlc-phase">
+                            <div class="phase-title">
+                                <span class="phase-icon"></span>
+                                <h4>Waterfall Model</h4>
+                            </div>
+                            <ul class="checklist">
+                                <li>Sequential approach</li>
+                                <li>Each phase must be completed before next begins</li>
+                                <li>Well-documented process</li>
+                                <li>Easy to understand and manage</li>
+                                <li>Best for small projects with clear requirements</li>
+                                <li>Difficult to accommodate changes</li>
+                                <li>Testing starts after development is complete</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Agile Model -->
+                        <div class="sdlc-phase">
+                            <div class="phase-title">
+                                <span class="phase-icon">🔄</span>
+                                <h4>Agile Model</h4>
+                            </div>
+                            <ul class="checklist">
+                                <li>Iterative and incremental approach</li>
+                                <li>Divides project into small iterations (sprints)</li>
+                                <li>Embraces changing requirements</li>
+                                <li>Continuous customer involvement</li>
+                                <li>Regular delivery of working software</li>
+                                <li>Daily stand-up meetings</li>
+                                <li>Retrospectives to improve process</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Scrum Framework -->
+                        <div class="sdlc-phase">
+                            <div class="phase-title">
+                                <span class="phase-icon">🏉</span>
+                                <h4>Scrum Framework</h4>
+                            </div>
+                            <ul class="checklist">
+                                <li>Popular Agile implementation</li>
+                                <li>2-4 week sprint cycles</li>
+                                <li>Uses product backlog and sprint backlog</li>
+                                <li>Defined roles: Product Owner, Scrum Master, Team</li>
+                                <li>Daily stand-up meetings</li>
+                                <li>Sprint review and retrospective</li>
+                                <li>Burn-down charts for tracking progress</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- DevOps Model -->
+                        <div class="sdlc-phase">
+                            <div class="phase-title">
+                                <span class="phase-icon">⚙️</span>
+                                <h4>DevOps Model</h4>
+                            </div>
+                            <ul class="checklist">
+                                <li>Integration of development and operations</li>
+                                <li>Continuous integration and delivery</li>
+                                <li>Automated testing and deployment</li>
+                                <li>Infrastructure as code</li>
+                                <li>Continuous monitoring</li>
+                                <li>Rapid feedback loops</li>
+                                <li>Focus on collaboration and communication</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Project Ideas Section -->
+    <section id="projects" class="section">
+        <div class="container">
+            <h2 class="section-title">SSDI Project Ideas</h2>
+            <div class="project-grid">
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <span>Healthcare Management System</span>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Healthcare Management System</h3>
+                        <p class="project-desc">Develop a comprehensive healthcare management system for hospitals to manage patient records, appointments, billing, and inventory.</p>
+                        <div class="tags">
+                            <span class="tag">Java/Spring</span>
+                            <span class="tag">MySQL</span>
+                            <span class="tag">React</span>
+                            <span class="tag">Medium-Large Scale</span>
+                        </div>
+                        <a href="https://github.com/Sid1608/E-HealthCare-Management-System" class="btn">View Example Project</a>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <span>E-commerce Platform</span>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">E-commerce Platform</h3>
+                        <p class="project-desc">Build an online shopping platform with product catalog, shopping cart, user accounts, payment processing, and order tracking.</p>
+                        <div class="tags">
+                            <span class="tag">Node.js</span>
+                            <span class="tag">MongoDB</span>
+                            <span class="tag">React</span>
+                            <span class="tag">Medium Scale</span>
+                        </div>
+                        <a href="https://github.com/evershopcommerce" class="btn">View Example Project</a>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <span>Learning Management System</span>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Learning Management System (LMS)</h3>
+                        <p class="project-desc">Create an educational platform for course management, student enrollment, content delivery, assignments, and progress tracking.</p>
+                        <div class="tags">
+                            <span class="tag">Python/Django</span>
+                            <span class="tag">PostgreSQL</span>
+                            <span class="tag">Vue.js</span>
+                            <span class="tag">Medium Scale</span>
+                        </div>
+                        <a href="#" class="btn">View Example Project</a>
+                    </div>
+                </div>
+                
+                <!-- Project 4 -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <span>Inventory Management System</span>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Inventory Management System</h3>
+                        <p class="project-desc">Develop a system for tracking inventory levels, orders, sales, and deliveries for retail businesses or warehouses.</p>
+                        <div class="tags">
+                            <span class="tag">C#/.NET</span>
+                            <span class="tag">SQL Server</span>
+                            <span class="tag">Angular</span>
+                            <span class="tag">Small-Medium Scale</span>
+                        </div>
+                        <a href="#" class="btn">View Example Project</a>
+                    </div>
+                </div>
+                
+                <!-- Project 5 -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <span>Task Management Application</span>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Task Management Application</h3>
+                        <p class="project-desc">Build a project management tool for teams to track tasks, set deadlines, assign responsibilities, and monitor progress.</p>
+                        <div class="tags">
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">Firebase</span>
+                            <span class="tag">Vue.js</span>
+                            <span class="tag">Small Scale</span>
+                        </div>
+                        <a href="#" class="btn">View Example Project</a>
+                    </div>
+                </div>
+                
+                <!-- Project 6 -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <span>Travel Booking System</span>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Travel Booking System</h3>
+                        <p class="project-desc">Create a platform for booking flights, hotels, and rental cars with search functionality, user accounts, and payment processing.</p>
+                        <div class="tags">
+                            <span class="tag">Java/Spring Boot</span>
+                            <span class="tag">PostgreSQL</span>
+                            <span class="tag">React</span>
+                            <span class="tag">Medium-Large Scale</span>
+                        </div>
+                        <a href="#" class="btn">View Example Project</a>
+                    </div>
+                </div>
+                
+                <!-- Project 7 -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <span>Restaurant Management System</span>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Restaurant Management System</h3>
+                        <p class="project-desc">Develop a system for managing restaurant operations including orders, reservations, inventory, billing, and customer management.</p>
+                        <div class="tags">
+                            <span class="tag">PHP/Laravel</span>
+                            <span class="tag">MySQL</span>
+                            <span class="tag">Bootstrap</span>
+                            <span class="tag">Small-Medium Scale</span>
+                        </div>
+                        <a href="#" class="btn">View Example Project</a>
+                    </div>
+                </div>
+                
+                <!-- Project 8 -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <span>Real Estate Portal</span>
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Real Estate Portal</h3>
+                        <p class="project-desc">Build a platform for property listings, search functionality, appointment scheduling, and property management for real estate agencies.</p>
+                        <div class="tags">
+                            <span class="tag">Python/Flask</span>
+                            <span class="tag">MongoDB</span>
+                            <span class="tag">React</span>
+                            <span class="tag">Medium Scale</span>
+                        </div>
+                        <a href="#" class="btn">View Example Project</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Resources Section -->
+    <section id="resources" class="section resources">
+        <div class="container">
+            <h2 class="section-title">SSDI Resources</h2>
+            <div class="resource-list">
+                <!-- Example Projects -->
+                <div class="resource-card">
+                    <h3 class="resource-title">Example Projects</h3>
+                    <ul class="resource-links">
+                        <li><a href="#">GitHub Student Developer Pack</a></li>
+                        <li><a href="#">Open Source SSDI Projects</a></li>
+                        <li><a href="#">University SSDI Project Repository</a></li>
+                        <li><a href="#">Industry SSDI Case Studies</a></li>
+                        <li><a href="#">Capstone Project Gallery</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Design Tools -->
+                <div class="resource-card">
+                    <h3 class="resource-title">Design Tools</h3>
+                    <ul class="resource-links">
+                        <li><a href="#">Lucidchart (Diagrams)</a></li>
+                        <li><a href="#">Draw.io (Free Diagramming)</a></li>
+                        <li><a href="#">Figma (UI/UX Design)</a></li>
+                        <li><a href="#">Balsamiq (Wireframing)</a></li>
+                        <li><a href="#">UML Tools Comparison</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Documentation Resources -->
+                <div class="resource-card">
+                    <h3 class="resource-title">Documentation Resources</h3>
+                    <ul class="resource-links">
+                        <li><a href="#">IEEE SRS Templates</a></li>
+                        <li><a href="#">SDLC Documentation Samples</a></li>
+                        <li><a href="#">Technical Writing Guide</a></li>
+                        <li><a href="#">User Manual Templates</a></li>
+                        <li><a href="#">API Documentation Best Practices</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Learning Resources -->
+                <div class="resource-card">
+                    <h3 class="resource-title">Learning Resources</h3>
+                    <ul class="resource-links">
+                        <li><a href="#">SDLC Video Course</a></li>
+                        <li><a href="#">Software Architecture Fundamentals</a></li>
+                        <li><a href="#">Design Patterns Explained</a></li>
+                        <li><a href="#">System Modeling Tutorials</a></li>
+                        <li><a href="#">Requirements Engineering Guide</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer Section -->
+    <footer>
+        <div class="container footer-content">
+            <p>SSDI Learning Hub - Your guide to Software System Design & Implementation</p>
+            <ul class="footer-links">
+                <li><a href="#sdlc">SDLC Cheat Sheet</a></li>
+                <li><a href="#projects">Project Ideas</a></li>
+                <li><a href="#resources">Resources</a></li>
+            </ul>
+            <p class="copyright">&copy; 2025 SSDI Learning Hub. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
